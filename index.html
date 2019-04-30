@@ -9,97 +9,82 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 <script>
-$(document).ready(function(){
-        for(let i=1;i<=9;i++){
-            var v1 = localStorage.getItem('pla'+i);
-            var v2 = localStorage.getItem('namepla'+i);
-            if (v1)
-                $('input[name=pla'+i+'].qty').val(v1);
-            if (v2)
-                $('input[name=pla'+i+'].name').val(v2);
-            var b1 = localStorage.getItem('chance'+i+' box1');
-            var b2 = localStorage.getItem('chance'+i+' box2');
-            var b3 = localStorage.getItem('chance'+i+' box3');
-            if (b1){
-                $('div[data-val="chance'+i+' box1"]').removeClass().attr('class', b1);
-        	}
-            if (b2){
-                $('div[data-val="chance'+i+' box2"]').removeClass().attr('class', b2);
-			}
-            if (b3){
-                $('div[data-val="chance'+i+' box3"]').removeClass().attr('class', b3);
-			}
-        }
-		var clicked=false;
-        $(".box").click(function(e){
-			e.preventDefault();
-            if(clicked){
-                $(this).toggleClass('green red');
-                clicked = false;
-				localStorage.setItem($(this).attr("data-val"), $(this).attr("class"));
-            } else {
-                $(this).toggleClass('red green');
-                clicked = true;
-				localStorage.setItem($(this).attr("data-val"), $(this).attr("class"));
-            }   
-        });
-		$('.right').click(function(e){
-			e.preventDefault();
-			fn = $(this).attr('field');
-			var cv = parseInt($('input[name='+fn+'].qty').val());
-			if (!isNaN(cv))
-				$('input[name='+fn+'].qty').val(cv + 10);
-			else
-				$('input[name='+fn+'].qty').val(0);
-                
-            localStorage.setItem(fn, $('input[name='+fn+'].qty').val());
-		});
-		$(".left").click(function(e) {
-			e.preventDefault();
-			fn = $(this).attr('field');
-			var cv = parseInt($('input[name='+fn+'].qty').val());
-			if (!isNaN(cv) && cv > 0 && cv-10 > 0)
-				$('input[name='+fn+'].qty').val(cv - 10);
-			else
-				$('input[name='+fn+'].qty').val(0);
-
-            localStorage.setItem(fn, $('input[name='+fn+'].qty').val());
-		});
-		$(".reset").click(function(e) {
-    		e.preventDefault();
-			$('.qty').val(0);
-			$('.name').val("Brak");
-			$('.box').removeClass().attr('class', 'box green');
-            $('.wrs').attr('style', '');
-			$('.wrs2').attr('style', '');
-		});
-    	$(".qty").keyup(function(e) {
-    		fn = $(this).attr('name');
-            localStorage.setItem(fn, $('input[name='+fn+'].qty').val());
-    	});
-    	$(".name").keyup(function(e) {
-    		fn = $(this).attr('name');
-            localStorage.setItem('name'+fn, $('input[name='+fn+'].name').val());
-    	});
-		$('input[type=checkbox].settings-disable').click(function(e){
-			if($('input[type=checkbox].settings-disable').prop('checked')){
-				$(".wrs").toggleClass('wrs wrs2');
-				$(".wrs2").click(function(e){
-					e.preventDefault();
-					$(this).css('display', 'none');
-				});
-				$(".name").prop("disabled", false);
-			}
-			else{
-				$(".wrs2").toggleClass('wrs2 wrs');
-				$(".wrs").click(function(e){
-					e.preventDefault();
-					$(this).css('display', 'block');
-				});
-				$(".name").prop("disabled", true);
-			}
-        });
-    });
+$(document).ready(function() {
+	for (let i = 1; i <= 9; i++) {
+		var v1 = localStorage.getItem('pla' + i);
+		var v2 = localStorage.getItem('namepla' + i);
+		if (v1) $('input[name=pla' + i + '].qty').val(v1);
+		if (v2) $('input[name=pla' + i + '].name').val(v2);
+		var b1 = localStorage.getItem('chance' + i + ' box1');
+		var b2 = localStorage.getItem('chance' + i + ' box2');
+		var b3 = localStorage.getItem('chance' + i + ' box3');
+		if (b1) $('div[data-val="chance' + i + ' box1"]').removeClass().attr('class', b1);
+		if (b2) $('div[data-val="chance' + i + ' box2"]').removeClass().attr('class', b2);
+		if (b3) $('div[data-val="chance' + i + ' box3"]').removeClass().attr('class', b3);
+	}
+	var clicked = false;
+	$(".box").click(function(e) {
+		e.preventDefault();
+		if (clicked) {
+			$(this).toggleClass('green red');
+			clicked = false;
+			localStorage.setItem($(this).attr("data-val"), $(this).attr("class"));
+		} else {
+			$(this).toggleClass('red green');
+			clicked = true;
+			localStorage.setItem($(this).attr("data-val"), $(this).attr("class"));
+		}
+	});
+	$('.right').click(function(e) {
+		e.preventDefault();
+		fn = $(this).attr('field');
+		var cv = parseInt($('input[name=' + fn + '].qty').val());
+		if (!isNaN(cv)) $('input[name=' + fn + '].qty').val(cv + 10);
+		else $('input[name=' + fn + '].qty').val(0);
+		localStorage.setItem(fn, $('input[name=' + fn + '].qty').val());
+	});
+	$(".left").click(function(e) {
+		e.preventDefault();
+		fn = $(this).attr('field');
+		var cv = parseInt($('input[name=' + fn + '].qty').val());
+		if (!isNaN(cv) && cv > 0 && cv - 10 > 0) $('input[name=' + fn + '].qty').val(cv - 10);
+		else $('input[name=' + fn + '].qty').val(0);
+		localStorage.setItem(fn, $('input[name=' + fn + '].qty').val());
+	});
+	$(".reset").click(function(e) {
+		e.preventDefault();
+		$('.qty').val(0);
+		$('.name').val("Brak");
+		$('.box').removeClass().attr('class', 'box green');
+		$('.wrs').attr('style', '');
+		$('.wrs2').attr('style', '');
+	});
+	$(".qty").keyup(function(e) {
+		fn = $(this).attr('name');
+		localStorage.setItem(fn, $('input[name=' + fn + '].qty').val());
+	});
+	$(".name").keyup(function(e) {
+		fn = $(this).attr('name');
+		localStorage.setItem('name' + fn, $('input[name=' + fn + '].name').val());
+	});
+	$('input[type=checkbox].settings-disable').click(function(e) {
+		if ($('input[type=checkbox].settings-disable').prop('checked')) {
+			$(".wrs").toggleClass('wrs wrs2');
+			$(".wrs2").click(function(e) {
+				e.preventDefault();
+				$(this).css('display', 'none');
+			});
+			$(".name").prop("disabled", false);
+		} else {
+			$(".wrs2").toggleClass('wrs2 wrs');
+			$(".wrs").click(function(e) {
+				e.preventDefault();
+				$(this).css('display', 'block');
+			});
+			$(".name").prop("disabled", true);
+		}
+	});
+});
 </script>
 </head>
 <body>
